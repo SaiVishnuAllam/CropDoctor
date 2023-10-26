@@ -54,19 +54,24 @@ namespace CropDoctor.Services.Core.Registration.Repository
         public async Task<ObjectId> UserRegister(string userName, string password, ObjectId collegeId)
         {
             var allUsers = await _context.User.Find(s => s.Username ==userName && s.Password == password).FirstOrDefaultAsync();
-            if(allUsers != null)
+            
+            //if(allUsers != null)
+            //{
+            //    return allUsers.Id;
+            //}
+            if (allUsers == null)
             {
-                return allUsers.Id;
+                var result = new UserModel
+                {
+                    Username = userName,
+                    Password = password,
+                    CollegeId = collegeId,
+                    IsActive = true
+                };
+                await _context.User.InsertOneAsync(result);
+                return result.Id;
             }
-            var result = new UserModel
-            {
-                Username = userName,
-                Password = password,
-                CollegeId = collegeId,
-                IsActive = true
-            };
-            await _context.User.InsertOneAsync(result);
-            return result.Id;
+            return allUsers.Id;
         }
     }
 }

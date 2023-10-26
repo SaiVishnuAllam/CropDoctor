@@ -1,6 +1,7 @@
 using CropDoctor.Services.Core.Authentication.Contracts;
 using CropDoctor.Services.Core.Authentication.Repository;
 using CropDoctor.Services.Core.Authentication.Services;
+using CropDoctor.Services.Core.Core.Exceptions;
 using CropDoctor.Services.Core.Data;
 using CropDoctor.Services.Core.Entry.Contracts;
 using CropDoctor.Services.Core.Entry.Repository;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<IRegistrationRepositoryService, RegistrationRepositor
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepositoryService, AuthRepositoryService>();
 
+builder.Services.AddTransient<GlobalErrorHandlingMiddleware>();
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(options =>
@@ -89,6 +91,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -98,6 +101,10 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
+app.UseHttpsRedirection();                                                                                                                                                                                     
+
 IConfiguration configuration = app.Configuration;
 IWebHostEnvironment environment = app.Environment;
 

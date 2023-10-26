@@ -1,4 +1,5 @@
-﻿using CropDoctor.Services.Core.Registration.Contracts;
+﻿using CropDoctor.Services.Core.Core.Exceptions;
+using CropDoctor.Services.Core.Registration.Contracts;
 using CropDoctor.Services.Core.Registration.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,8 @@ namespace CropDoctor.Service.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> Registration(RegistrationDto registrationDto)
         {
+            if (registrationDto == null)
+                throw new BadRequestException("Check the data such that everything is filled and have other that null value.");
             var result = await _registrationService.UserRegistration(registrationDto);
             if (result == null)
             {

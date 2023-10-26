@@ -1,8 +1,9 @@
 ﻿using CropDoctor.Services.Core.Authentication.Contracts;
 using CropDoctor.Services.Core.Authentication.Dtos;
-using Microsoft.AspNetCore.Authorization;
+using CropDoctor.Services.Core.Core.Exceptions;
+using Microsoft.AspNetCore.Authorization; 
 using Microsoft.AspNetCore.Mvc;
-
+using System.Text.Json;
 
 namespace CropDoctor.Service.Controllers
 {
@@ -21,26 +22,14 @@ namespace CropDoctor.Service.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Auth(UserDto userDto)
+        public async Task<string> Auth(UserDto userDto)
         {            
-            IActionResult response = Unauthorized();
-            if (userDto != null)
+            if (userDto == null)
             {
-                 var result = await _authService.Authentication(userDto);
-
-                if (result == "university")
-                    response = Unauthorized($"{userDto.UniversityName} is not registered in this program");
-                else if (result == "college")
-                    response = Unauthorized($"{userDto.CollegeName} is not registered under {userDto.UniversityName}");
-                else if (result == "login")
-                    response = Unauthorized($"{userDto.UserName} is not registered, Check the UserName and Password Again");
-                else if (result == "invalid")
-                    response = Unauthorized("Access is not granted to user, please contact the your incharge.");
-                else
-                    response = Ok(result);
+                throw new UnauthorizedException("User Details are not entered, check once !!");
             }
-
-            return response;
+            var result = await _authService.Authentication(userDto);
+            return result;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CropDoctor.Services.Core.Authentication.Contracts;
 using CropDoctor.Services.Core.Authentication.Dtos;
 using CropDoctor.Services.Core.Authentication.Repository;
+using CropDoctor.Services.Core.Core.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -29,11 +30,13 @@ namespace CropDoctor.Services.Core.Authentication.Services
             
             if (result == null)
             {
-                return "login";
+                throw new UnauthorizedException("UserName and password are invalid !!!");
+                //return "login";
             }
             else if (result.IsActive == false)
             {
-                return "invalid";
+                //return "invalid";
+                throw new UnauthorizedException("User is not allowed temporarily!!");
             }
 
             if (userDto.UniversityName.Equals(result.UniversityName))
@@ -70,9 +73,11 @@ namespace CropDoctor.Services.Core.Authentication.Services
 
                     return jwtToken;
                 }
-                return "college";
+                throw new UnauthorizedException("College is not registered !!");
+                //return "college";
             }
-            return "university";
+            throw new UnauthorizedException("University is not registered !!");
+            //return "university";
         }
     }
 }

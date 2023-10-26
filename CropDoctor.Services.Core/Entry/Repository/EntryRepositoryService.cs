@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using CropDoctor.Services.Core.Core.Exceptions;
 
 namespace CropDoctor.Services.Core.Entry.Repository
 {
@@ -21,12 +22,19 @@ namespace CropDoctor.Services.Core.Entry.Repository
         public async Task<string> Insert(EntryModel image)
         {
             await _context.Collection.InsertOneAsync(image);
-            return image.Id;
+            if (image.Id == null)
+                throw new NotFoundException("Data is not stored successfully. Please try again to upload data.");
+            else
+                return image.Id;
         }
 
         public async Task<EntryModel> Display(string id)
         {
-            return await _context.Collection.Find(s => s.Id == id).FirstOrDefaultAsync();
+            var result = await _context.Collection.Find(s => s.Id == id).FirstOrDefaultAsync();
+            if (result == null)
+                throw new NotFoundException($"Data with the Id = {id} is not found");
+            else
+                return result;
         }
     }
 }
