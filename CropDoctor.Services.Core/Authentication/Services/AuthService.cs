@@ -56,7 +56,7 @@ namespace CropDoctor.Services.Core.Authentication.Services
                         new Claim(JwtRegisteredClaimNames.Sub,userDto.UserName)
                     });
 
-                    var expires = DateTime.UtcNow.AddMinutes(5);
+                    var expires = DateTime.UtcNow.AddMinutes(1.5);
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {

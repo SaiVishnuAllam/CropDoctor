@@ -27,7 +27,7 @@ builder.Services.AddScoped<IRegistrationRepositoryService, RegistrationRepositor
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepositoryService, AuthRepositoryService>();
 
-builder.Services.AddTransient<GlobalErrorHandlingMiddleware>();
+builder.Services.AddSingleton<GlobalErrorHandlingMiddleware>();
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(options =>
