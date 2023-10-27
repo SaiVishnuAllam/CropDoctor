@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace CropDoctor.Service.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -18,11 +18,12 @@ namespace CropDoctor.Service.Controllers
             _authService = authService;
         }
 
-        
 
-        [AllowAnonymous]
+        //summary and params
+        [Route("login")]
         [HttpPost]
-        public async Task<string> Auth(UserDto userDto)
+        
+        public async Task<LoginDto> Auth(UserDto userDto)
         {            
             if (userDto == null)
             {

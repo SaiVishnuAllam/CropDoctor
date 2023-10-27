@@ -9,7 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CropDoctor.Service.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/entry")]
     [ApiController]
     public class EntryController : ControllerBase
     {
@@ -19,9 +20,8 @@ namespace CropDoctor.Service.Controllers
         {
             _entryServices = entryServices;
         }
-
         [HttpPost]
-        [Authorize]
+        [Route("post")]     
         public async Task<IActionResult> EntryUpload(IFormFile image, string plantName, string plantPart, string plantDisease)
         {
             if (plantName == null || plantPart == null || plantDisease == null || image == null)
@@ -32,10 +32,8 @@ namespace CropDoctor.Service.Controllers
                 return Ok($"Image uploaded successfully and Id ={result} ");
             }            
         }
-
-
-        [HttpGet("{id}")]
-        [Authorize]
+        [HttpGet]
+        [Route("get")]     
         public async Task<IActionResult> EntryDisplay(string id)
         {
             if (id.IsNullOrEmpty())

@@ -24,7 +24,7 @@ namespace CropDoctor.Services.Core.Authentication.Services
             _authRepositoryService = authRepositoryService;
             _configuration = configuration;
         }
-        public async Task<string> Authentication(UserDto userDto)
+        public async Task<LoginDto> Authentication(UserDto userDto)
         {
             var result = await _authRepositoryService.AuthVerify(userDto);
             
@@ -55,8 +55,8 @@ namespace CropDoctor.Services.Core.Authentication.Services
                     {
                         new Claim(JwtRegisteredClaimNames.Sub,userDto.UserName)
                     });
-
-                    var expires = DateTime.UtcNow.AddMinutes(1.5);
+                    int time = 2;
+                    var expires = DateTime.UtcNow.AddHours(time);
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
@@ -71,7 +71,16 @@ namespace CropDoctor.Services.Core.Authentication.Services
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     var jwtToken = tokenHandler.WriteToken(token);
 
-                    return jwtToken;
+                    LoginDto response = new LoginDto
+                    {
+                        AccessToken = jwtToken,
+                        TokenExpiryHours = time,
+                        Username = userDto.UserName,
+                        Password = userDto.Password,
+                        CollegeName = userDto.CollegeName,
+                        UniversityName = userDto.UniversityName
+                    };
+                    return response;
                 }
                 throw new UnauthorizedException("College is not registered !!");
                 //return "college";

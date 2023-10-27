@@ -14,6 +14,6 @@ namespace CropDoctor.Services.Core.Registration.Repository
 
         Task<ObjectId> CollegeRegister(string college, ObjectId universityId);
 
-        Task<ObjectId> UserRegister(string username,  string password, ObjectId collegeId);
+        Task<ObjectId> UserRegister(string username,  string password, string studId, string emaiul, ObjectId collegeId);
     }
 }

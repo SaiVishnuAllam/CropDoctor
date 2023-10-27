@@ -9,6 +9,6 @@ namespace CropDoctor.Services.Core.Authentication.Contracts
 {
     public interface IAuthService
     {
-        Task<string> Authentication(UserDto userDto);
+        Task<LoginDto> Authentication(UserDto userDto);
     }
 }

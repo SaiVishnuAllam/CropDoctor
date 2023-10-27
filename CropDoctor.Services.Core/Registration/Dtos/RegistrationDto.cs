@@ -20,5 +20,11 @@ namespace CropDoctor.Services.Core.Registration.Dtos
 
         [JsonProperty("password")]
         public string? Password { get; set; }
+
+        [JsonProperty("studentId")]
+        public string? StudentId { get; set; }
+
+        [JsonProperty("email")]
+        public string? Email { get; set; }
     }
 }

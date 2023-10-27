@@ -30,8 +30,10 @@ namespace CropDoctor.Services.Core.Entry.Repository
 
         public async Task<EntryModel> Display(string id)
         {
-            var result = await _context.Collection.Find(s => s.Id == id).FirstOrDefaultAsync();
-            if (result == null)
+            var result = await _context.Collection.Find(s => s.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+            if (result ==null)
+
+                
                 throw new NotFoundException($"Data with the Id = {id} is not found");
             else
                 return result;

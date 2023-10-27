@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CropDoctor.Service.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/registration")]
     [ApiController]
     public class RegistrationController : ControllerBase
     {
@@ -17,8 +18,8 @@ namespace CropDoctor.Service.Controllers
             _registrationService = registrationService;
         }
 
-        [Authorize]
         [HttpPost]
+        [Route("post")]
         public async Task<ActionResult<string>> Registration(RegistrationDto registrationDto)
         {
             if (registrationDto == null)

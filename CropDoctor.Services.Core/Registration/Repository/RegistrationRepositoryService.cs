@@ -22,7 +22,7 @@ namespace CropDoctor.Services.Core.Registration.Repository
 
         public async Task<ObjectId> UniversityRegister(string university)
         {
-            var Univer = await _context.University.Find(s => s.UniversityName == university).FirstOrDefaultAsync();
+            var Univer = await _context.University.Find(s => s.UniversityName == university).FirstOrDefaultAsync().ConfigureAwait(false);
             if (Univer != null)
             {
                 return Univer.Id;
@@ -37,7 +37,7 @@ namespace CropDoctor.Services.Core.Registration.Repository
 
         public async Task<ObjectId> CollegeRegister(string college, ObjectId universityId)
         {
-            var allCollege = await _context.College.Find(s => s.CollegeName == college).FirstOrDefaultAsync();
+            var allCollege = await _context.College.Find(s => s.CollegeName == college).FirstOrDefaultAsync().ConfigureAwait(false);
             if (allCollege != null)
             {
                 return allCollege.Id;
@@ -51,27 +51,29 @@ namespace CropDoctor.Services.Core.Registration.Repository
             return result.Id;
         }
 
-        public async Task<ObjectId> UserRegister(string userName, string password, ObjectId collegeId)
+        public async Task<ObjectId> UserRegister(string userName, string password, string studId, string email, ObjectId collegeId)
         {
-            var allUsers = await _context.User.Find(s => s.Username ==userName && s.Password == password).FirstOrDefaultAsync();
+            var User = await _context.User.Find(s => s.Username ==userName && s.Password == password).FirstOrDefaultAsync().ConfigureAwait(false);
             
             //if(allUsers != null)
             //{
             //    return allUsers.Id;
             //}
-            if (allUsers == null)
+            if (User == null)
             {
                 var result = new UserModel
                 {
                     Username = userName,
                     Password = password,
                     CollegeId = collegeId,
+                    StudentID = studId,
+                    Email = email,
                     IsActive = true
                 };
                 await _context.User.InsertOneAsync(result);
                 return result.Id;
             }
-            return allUsers.Id;
+            return User.Id;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace CropDoctor.Services.Core.Registration.Services
             var college = await _registrationRepositoryService.CollegeRegister(registrationDto.CollegeName, university);
             if (college == ObjectId.Empty)
                 throw new InternalServerErrorException("Unable to add or get college to Database");
-            var user = await _registrationRepositoryService.UserRegister(registrationDto.Username, registrationDto.Password, college);
+            var user = await _registrationRepositoryService.UserRegister(registrationDto.Username, registrationDto.Password, registrationDto.StudentId, registrationDto.Email, college);
             if (user == ObjectId.Empty)
                 throw new InternalServerErrorException("Unable to add or get User Details to Database");
             return user;
