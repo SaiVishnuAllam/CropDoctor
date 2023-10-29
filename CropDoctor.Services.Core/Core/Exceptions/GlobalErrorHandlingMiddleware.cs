@@ -50,7 +50,7 @@ namespace CropDoctor.Services.Core.Core.Exceptions
             }
             else
             {
-                status = (int)HttpStatusCode.NoContent;
+                status = 0;
             }
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;

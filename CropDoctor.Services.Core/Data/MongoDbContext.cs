@@ -1,5 +1,6 @@
 ﻿using CropDoctor.Services.Core.Data.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
 using MongoDB.Driver;
 
 namespace CropDoctor.Services.Core.Data
@@ -50,6 +51,7 @@ namespace CropDoctor.Services.Core.Data
         public IMongoCollection<UniversityModel> University => database?.GetCollection<UniversityModel>("UniversityList") ?? throw new InvalidOperationException("Database is not intialized");
         public IMongoCollection<CollegeModel> College => database?.GetCollection<CollegeModel>("CollegeList") ?? throw new InvalidOperationException("Database is not intialized");
         public IMongoCollection<UserModel> User => database?.GetCollection<UserModel>("UserList") ?? throw new InvalidOperationException("Database is not intialized");
+        public IMongoCollection<ResponseModel> Response => database?.GetCollection<ResponseModel>("UploadedImage") ?? throw new InvalidOperationException("Database is not intialized");
     } 
 }
 
