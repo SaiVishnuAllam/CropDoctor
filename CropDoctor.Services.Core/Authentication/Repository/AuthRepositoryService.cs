@@ -85,14 +85,17 @@ namespace CropDoctor.Services.Core.Authentication.Repository
 
         public async Task<ObjectId> UniversityRegister(string university)
         {
-            var Univer = await _context.University.Find(s => s.UniversityName == university).FirstOrDefaultAsync().ConfigureAwait(false);
-            if (Univer != null)
+            var universityName = await _context.University.Find(s => s.UniversityName == university).FirstOrDefaultAsync().ConfigureAwait(false);
+            if (universityName is not null)
             {
-                return Univer.Id;
+                return universityName.Id;
             }
             var result = new UniversityModel
             {
                 UniversityName = university,
+                CreatedOn = DateTime.Now,
+                UpdatedOn = DateTime.Now,
+                IsActive = true
             };
             await _context.University.InsertOneAsync(result);
             return result.Id;
@@ -101,14 +104,17 @@ namespace CropDoctor.Services.Core.Authentication.Repository
         public async Task<ObjectId> CollegeRegister(string college, ObjectId universityId)
         {
             var allCollege = await _context.College.Find(s => s.CollegeName == college).FirstOrDefaultAsync().ConfigureAwait(false);
-            if (allCollege != null)
+            if (allCollege is not null)
             {
                 return allCollege.Id;
             }
             var result = new CollegeModel
             {
                 UniversityId = universityId,
-                CollegeName = college
+                CollegeName = college,
+                CreatedOn = DateTime.Now,
+                UpdatedOn = DateTime.Now,
+                IsActive = true
             };
             await _context.College.InsertOneAsync(result);
             return result.Id;
@@ -122,7 +128,7 @@ namespace CropDoctor.Services.Core.Authentication.Repository
             //{
             //    return allUsers.Id;
             //}
-            if (User == null)
+            if (User is null)
             {
                 var result = new UserModel
                 {
@@ -131,6 +137,8 @@ namespace CropDoctor.Services.Core.Authentication.Repository
                     CollegeId = collegeId,
                     StudentID = studId,
                     Email = email,
+                    CreatedOn = DateTime.Now,
+                    UpdatedOn = DateTime.Now,
                     IsActive = true
                 };
                 await _context.User.InsertOneAsync(result);
