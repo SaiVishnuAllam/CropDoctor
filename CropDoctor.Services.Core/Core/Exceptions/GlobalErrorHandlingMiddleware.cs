@@ -50,7 +50,12 @@ namespace CropDoctor.Services.Core.Core.Exceptions
             }
             else
             {
-                status = 0;
+                var errors = JsonSerializer.Serialize(new
+                {
+                    error = message,
+                    stack
+                });                
+                return context.Response.WriteAsync(errors);
             }
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;

@@ -42,6 +42,7 @@ builder.Services.AddScoped<IUploadRepositoryService, UploadRepositoryService>();
 //builder.Services.AddScoped<IImageStreamService, ImageStreamService>();
 //builder.Services.AddScoped<IImageStreamRepositoryService, ImageStreamRepositoryService>();
 
+builder.Services.AddCors();
 
 builder.Services.AddSingleton<GlobalErrorHandlingMiddleware>();
 builder.Services.AddControllers();
@@ -117,6 +118,12 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+//app.UseCors("CorsPolicy");
+app.UseCors(options =>
+     options.WithOrigins("http://localhost:8080")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 
 app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 app.UseHttpsRedirection();                                                                                                                                                                                     
