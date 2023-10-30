@@ -15,11 +15,11 @@ namespace CropDoctor.Services.Core.ImageUpload.Repository
     public class UploadRepositoryService : IUploadRepositoryService
     {
         private readonly BlobContainerClient _container;
-        private readonly MongoDbContext _context;
+        //private readonly MongoDbContext _context;
 
         public UploadRepositoryService(IOptions<StorageSettings> storageSettings)
         {
-            _context = MongoDbContext.Instance;
+            //_context = MongoDbContext.Instance;
             var client = new BlobServiceClient(storageSettings.Value.ConnectionString);
             if(client != null)
             {
@@ -41,12 +41,12 @@ namespace CropDoctor.Services.Core.ImageUpload.Repository
             response.ImageUri = blobClient.Uri.AbsoluteUri;
             response.Name = blobClient.Name;
 
-            ResponseModel responseModel = new ResponseModel()
+            /*ResponseModel responseModel = new ResponseModel()
             {
                 ImageName = response.Name,
                 ImageUrl = response.ImageUri
-            };
-            await _context.Response.InsertOneAsync(responseModel);
+            };*/
+            //await _context.Response.InsertOneAsync(responseModel);
             return response;
         }
     }

@@ -75,10 +75,11 @@ namespace CropDoctor.Services.Core.Authentication.Services
                     {
                         AccessToken = jwtToken,
                         TokenExpiryHours = time,
-                        Username = userDto.UserName,
-                        Password = userDto.Password,
-                        CollegeName = userDto.CollegeName,
-                        UniversityName = userDto.UniversityName
+                        Username = result.UserName,
+                        Password = result.Password,
+                        CollegeName = result.CollegeName,
+                        UniversityName = result.UniversityName,
+                        UserId = result.Id
                     };
                     return response;
                 }

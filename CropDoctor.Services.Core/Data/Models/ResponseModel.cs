@@ -18,5 +18,11 @@ namespace CropDoctor.Services.Core.Data.Models
 
         [BsonElement("imageUrl")]
         public string? ImageUrl { get; set; }
+
+        [BsonElement("disease")]
+        public string? Disease { get; set;}
+
+        [BsonElement("userId")]
+        public string? UserId { get; set;}
     }
 }

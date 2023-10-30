@@ -38,6 +38,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepositoryService, AuthRepositoryService>();
 builder.Services.AddScoped<IUploadService, UploadService>();
 builder.Services.AddScoped<IUploadRepositoryService, UploadRepositoryService>();
+builder.Services.AddScoped<ISaveImageRepositoryService, SaveImageRepositoryService>();
+builder.Services.AddScoped<ISaveImageService, SaveImageService>();
 
 //builder.Services.AddScoped<IImageStreamService, ImageStreamService>();
 //builder.Services.AddScoped<IImageStreamRepositoryService, ImageStreamRepositoryService>();

@@ -67,7 +67,8 @@ namespace CropDoctor.Services.Core.Authentication.Repository
                     { "password", "$password" },
                     { "universityName", "$universityName.universityName" },
                     { "collegeName", "$collegeName.collegeName" },
-                    { "isActive", "$isActive" }
+                    { "isActive", "$isActive" },
+                    {"id", "$_id" }
                 })
             };
 

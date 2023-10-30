@@ -27,5 +27,8 @@ namespace CropDoctor.Services.Core.Authentication.Dtos
 
         [JsonProperty("universityName")]
         public string? UniversityName { get; set; }
+
+        [JsonProperty("userId")]
+        public string? UserId { get; set; }
     }
 }

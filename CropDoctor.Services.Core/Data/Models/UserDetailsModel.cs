@@ -27,5 +27,8 @@ namespace CropDoctor.Services.Core.Data.Models
 
         [BsonElement("isActive")]
         public bool? IsActive { get; set; }
+
+        /*[BsonElement("userId")]
+        public string? UserId { get; set; }*/
     }
 }
