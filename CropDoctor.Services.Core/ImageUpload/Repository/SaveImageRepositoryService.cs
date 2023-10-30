@@ -26,14 +26,11 @@ namespace CropDoctor.Services.Core.ImageUpload.Repository
                 ImageName = imageSaveDto.ImageName,
                 ImageUrl = imageSaveDto.ImageUrl,
                 Disease = imageSaveDto.Disease,
-                UserId = imageSaveDto.UserId
+                UserId = imageSaveDto.UserId,
+                CreatedOn = DateTime.Now,
+                UpdatedOn= DateTime.Now,
+                
             };
-        
-            /*responseModel.ImageName = imageSaveDto.ImageName;
-            responseModel.ImageUrl = imageSaveDto.ImageUrl;
-            responseModel.Disease = imageSaveDto.Disease;
-            responseModel.UserId = imageSaveDto.UserId;*/
-            
             await _context.Response.InsertOneAsync(responseModel);
         }
     }

@@ -32,6 +32,12 @@ namespace CropDoctor.Services.Core.Data.Models
         [BsonElement("email")]
         public string? Email { get; set; }
 
+        [BsonElement("createdOn")]
+        public DateTime? CreatedOn { get; set; }
+
+        [BsonElement("updatedOn")]
+        public DateTime? UpdatedOn { get; set; }
+
 
     }
 }

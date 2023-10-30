@@ -3,20 +3,10 @@ using CropDoctor.Services.Core.Authentication.Repository;
 using CropDoctor.Services.Core.Authentication.Services;
 using CropDoctor.Services.Core.Core.Exceptions;
 using CropDoctor.Services.Core.Data;
-using CropDoctor.Services.Core.Entry.Contracts;
-using CropDoctor.Services.Core.Entry.Repository;
-using CropDoctor.Services.Core.Entry.Services;
-/*using CropDoctor.Services.Core.ImageStream.Contracts;
-using CropDoctor.Services.Core.ImageStream.Repository;
-using CropDoctor.Services.Core.ImageStream.Services;*/
 using CropDoctor.Services.Core.ImageUpload.Contracts;
 using CropDoctor.Services.Core.ImageUpload.Repository;
 using CropDoctor.Services.Core.ImageUpload.Services;
-using CropDoctor.Services.Core.Registration.Contracts;
-using CropDoctor.Services.Core.Registration.Repository;
-using CropDoctor.Services.Core.Registration.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Azure;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -30,10 +20,9 @@ builder.Services.AddSingleton<MongoDbSettings>();
 builder.Services.Configure<StorageSettings>(builder.Configuration.GetSection(nameof(StorageSettings)));
 builder.Services.AddSingleton<StorageSettings>();
 
-builder.Services.AddScoped<IEntryServices, EntryServices>();
-builder.Services.AddScoped<IEntryRepositoryService, EntryRepositoryService>();
-builder.Services.AddScoped<IRegistrationService, RegistrationService>();
-builder.Services.AddScoped<IRegistrationRepositoryService, RegistrationRepositoryService>();
+
+/*builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<IRegistrationRepositoryService, RegistrationRepositoryService>();*/
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepositoryService, AuthRepositoryService>();
 builder.Services.AddScoped<IUploadService, UploadService>();
@@ -41,8 +30,7 @@ builder.Services.AddScoped<IUploadRepositoryService, UploadRepositoryService>();
 builder.Services.AddScoped<ISaveImageRepositoryService, SaveImageRepositoryService>();
 builder.Services.AddScoped<ISaveImageService, SaveImageService>();
 
-//builder.Services.AddScoped<IImageStreamService, ImageStreamService>();
-//builder.Services.AddScoped<IImageStreamRepositoryService, ImageStreamRepositoryService>();
+
 
 builder.Services.AddCors();
 

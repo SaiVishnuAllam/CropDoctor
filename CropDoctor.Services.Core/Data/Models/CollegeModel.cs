@@ -19,5 +19,14 @@ namespace CropDoctor.Services.Core.Data.Models
 
         [BsonElement("collegeName")]
         public string? CollegeName { get; set; }
+
+        [BsonElement("createdOn")]
+        public DateTime? CreatedOn { get; set; }
+
+        [BsonElement("updatedOn")]
+        public DateTime? UpdatedOn { get; set; }
+
+        [BsonElement("isActive")]
+        public bool? IsActive { get; set; }
     }
 }

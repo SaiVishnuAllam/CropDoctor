@@ -20,5 +20,11 @@ namespace CropDoctor.Services.Core.ImageUpload.Dtos
 
         [JsonProperty("imageName")]
         public string? ImageName { get; set; }
+
+        [JsonProperty("createdOn")]
+        public DateTime? CreatedOn { get; set; }
+
+        [JsonProperty("updatedOn")]
+        public DateTime? UpdatedOn { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using CropDoctor.Services.Core.Authentication.Repository;
 using CropDoctor.Services.Core.Core.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,13 +25,15 @@ namespace CropDoctor.Services.Core.Authentication.Services
             _authRepositoryService = authRepositoryService;
             _configuration = configuration;
         }
+
+        
         public async Task<LoginDto> Authentication(UserDto userDto)
         {
             var result = await _authRepositoryService.AuthVerify(userDto);
-            
+
             if (result == null)
             {
-                throw new UnauthorizedException("UserName and password are invalid !!!");
+                throw new UnauthorizedException("UserName and password is invalid !!!");
                 //return "login";
             }
             else if (result.IsActive == false)
@@ -89,6 +92,22 @@ namespace CropDoctor.Services.Core.Authentication.Services
             throw new UnauthorizedException("University is not registered !!");
             //return "university";
         }
+
+        public async Task<ObjectId> UserRegistration(RegistrationDto registrationDto)
+        {
+            var university = await _authRepositoryService.UniversityRegister(registrationDto.UniversityName);
+            if (university == ObjectId.Empty)
+                throw new InternalServerErrorException("Unable to add or get university to Database");
+            var college = await _authRepositoryService.CollegeRegister(registrationDto.CollegeName, university);
+            if (college == ObjectId.Empty)
+                throw new InternalServerErrorException("Unable to add or get college to Database");
+            var user = await _authRepositoryService.UserRegister(registrationDto.Username, registrationDto.Password, registrationDto.StudentId, registrationDto.Email, college);
+            if (user == ObjectId.Empty)
+                throw new InternalServerErrorException("Unable to add or get User Details to Database");
+            return user;
+
+        }
+
     }
 }
 

@@ -82,6 +82,64 @@ namespace CropDoctor.Services.Core.Authentication.Repository
 
             
         }
+
+        public async Task<ObjectId> UniversityRegister(string university)
+        {
+            var Univer = await _context.University.Find(s => s.UniversityName == university).FirstOrDefaultAsync().ConfigureAwait(false);
+            if (Univer != null)
+            {
+                return Univer.Id;
+            }
+            var result = new UniversityModel
+            {
+                UniversityName = university,
+            };
+            await _context.University.InsertOneAsync(result);
+            return result.Id;
+        }
+
+        public async Task<ObjectId> CollegeRegister(string college, ObjectId universityId)
+        {
+            var allCollege = await _context.College.Find(s => s.CollegeName == college).FirstOrDefaultAsync().ConfigureAwait(false);
+            if (allCollege != null)
+            {
+                return allCollege.Id;
+            }
+            var result = new CollegeModel
+            {
+                UniversityId = universityId,
+                CollegeName = college
+            };
+            await _context.College.InsertOneAsync(result);
+            return result.Id;
+        }
+
+        public async Task<ObjectId> UserRegister(string userName, string password, string studId, string email, ObjectId collegeId)
+        {
+            var User = await _context.User.Find(s => s.Username == userName && s.Password == password).FirstOrDefaultAsync().ConfigureAwait(false);
+
+            //if(allUsers != null)
+            //{
+            //    return allUsers.Id;
+            //}
+            if (User == null)
+            {
+                var result = new UserModel
+                {
+                    Username = userName,
+                    Password = password,
+                    CollegeId = collegeId,
+                    StudentID = studId,
+                    Email = email,
+                    IsActive = true
+                };
+                await _context.User.InsertOneAsync(result);
+                return result.Id;
+            }
+            return User.Id;
+        }
+
+
     }
-    
+
 }

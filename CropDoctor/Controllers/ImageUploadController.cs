@@ -1,11 +1,13 @@
 ﻿using CropDoctor.Services.Core.ImageUpload.Contracts;
 using CropDoctor.Services.Core.ImageUpload.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CropDoctor.Service.Controllers
 {
-    [Route("api/ImageUpload")]
+    [Authorize]
+    [Route("api/image")]
     [ApiController]
     public class ImageUploadController : ControllerBase
     {
@@ -17,20 +19,46 @@ namespace CropDoctor.Service.Controllers
             _uploadService = uploadService;
             _saveImageService = saveImageService;
         }
+        /// <summary>
+        /// API to upload Image to azure storage
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("SingleImage")]
+        [Route("upload")]
         public async Task<IActionResult> SingleImageUpload(IFormFile image)
         {
-            var result = await _uploadService.UploadImage(image);
-            return Ok(result);
+            try
+            {
+                var result = await _uploadService.UploadImage(image);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
+        /// <summary>
+        /// API to save Image URL to DB
+        /// </summary>
+        /// <param name="details"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("SaveImage")]
+        [Route("Save")]
         public async Task<IActionResult> SaveSingleImage(ImageSaveDto details)
         {
-            await _saveImageService.SaveImage(details);
-            return Ok("Image Saved in DB");
+            try
+            {
+                await _saveImageService.SaveImage(details);
+                return Ok("Image Saved in DB");
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

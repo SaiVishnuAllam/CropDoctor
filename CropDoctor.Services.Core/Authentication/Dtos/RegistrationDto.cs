@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CropDoctor.Services.Core.Registration.Dtos
+namespace CropDoctor.Services.Core.Authentication.Dtos
 {
     public class RegistrationDto
     {

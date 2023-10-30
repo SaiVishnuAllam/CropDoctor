@@ -26,7 +26,10 @@
 
   <ItemGroup>
     <Folder Include="Core\Extensions\" />
-    <Folder Include="Entry\Dtos\" />
+    <Folder Include="Registration\Contracts\" />
+    <Folder Include="Registration\Dtos\" />
+    <Folder Include="Registration\Repository\" />
+    <Folder Include="Registration\Services\" />
   </ItemGroup>
 
 </Project>
