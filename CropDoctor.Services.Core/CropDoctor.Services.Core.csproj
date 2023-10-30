@@ -26,10 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Core\Extensions\" />
-    <Folder Include="Registration\Contracts\" />
-    <Folder Include="Registration\Dtos\" />
-    <Folder Include="Registration\Repository\" />
-    <Folder Include="Registration\Services\" />
+    <Folder Include="StudentDetails\Dtos\" />
   </ItemGroup>
 
 </Project>

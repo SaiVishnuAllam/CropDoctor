@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CropDoctor.Services.Core.Authentication.Dtos.RequestPaswordDto;
 
 namespace CropDoctor.Services.Core.Authentication.Repository
 {
@@ -79,8 +80,7 @@ namespace CropDoctor.Services.Core.Authentication.Repository
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(list);
             var userList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<UserDetailsModel>>(json).FirstOrDefault();
             return userList;
-
-            
+          
         }
 
         public async Task<ObjectId> UniversityRegister(string university)
@@ -108,6 +108,7 @@ namespace CropDoctor.Services.Core.Authentication.Repository
             {
                 return allCollege.Id;
             }
+
             var result = new CollegeModel
             {
                 UniversityId = universityId,
@@ -124,10 +125,11 @@ namespace CropDoctor.Services.Core.Authentication.Repository
         {
             var User = await _context.User.Find(s => s.Username == userName && s.Password == password).FirstOrDefaultAsync().ConfigureAwait(false);
 
-            //if(allUsers != null)
-            //{
-            //    return allUsers.Id;
-            //}
+            if (User != null)
+            {
+                return User.Id;
+            }
+
             if (User is null)
             {
                 var result = new UserModel
@@ -147,7 +149,72 @@ namespace CropDoctor.Services.Core.Authentication.Repository
             return User.Id;
         }
 
+        /*public async Task<User> GetUserByUserName(string userName)
+        {
+            User user = await _userRepositoryService.GetUserByUserName(userName);
+            return user;
+            
+        }*/
+        public async Task<UserModel> GetUserByUserName(string userName)
+        {
+            try
+            {
+                var filter = Builders<UserModel>.Filter.Where(x => x.Username == userName);
+                UserModel user = await _context.User.Find(filter).FirstOrDefaultAsync();
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An exception occured while fetching user details in GetUserByUserName Method" + ex.Message);
+            }
+        }
 
+        public async Task UpdateUserPassword(RequestPasswordDto requestPasswordDto)
+        {
+            FilterDefinition<UserModel> filterDefinition = Builders<UserModel>.Filter.Eq(x => x.Id, requestPasswordDto.Id);
+            UserModel user = await _context.User.Find(filterDefinition).FirstOrDefaultAsync().ConfigureAwait(false);
+            if (user != null)
+            {
+                UpdateDefinition<UserModel> updateDefinition = Builders<UserModel>.Update
+                  .Set(x => x.Password, requestPasswordDto.NewPassword);
+                var updateResult = await _context.User.UpdateOneAsync(filterDefinition, updateDefinition);
+            }
+            
+        }
+
+        public async Task<OtpVerification> VerifyOtp(string userName, string otpCode)
+        {
+            try
+            {
+                var otpVerification = await _context.OtpVerification.Find(x => x.UserName == userName && x.Code == otpCode).FirstOrDefaultAsync();
+
+                return otpVerification;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("exception occured During otp verification", ex.Message));
+            }
+        }
+
+        public async Task UpdateNewPassword(string userName, string newPassword)
+        {
+            try
+            {
+                var user = await GetUserByUserName(userName) ?? throw new Exception("User not found.");
+                FilterDefinition<UserModel> filterDefinition = Builders<UserModel>.Filter.Eq(x => x.Id, user.Id);
+                UserModel users = await _context.User.Find(filterDefinition).FirstOrDefaultAsync().ConfigureAwait(false);
+                if (users != null)
+                {
+                    UpdateDefinition<UserModel> updateDefinition = Builders<UserModel>.Update
+                      .Set(x => x.Password, newPassword);
+                    var updateResult = await _context.User.UpdateOneAsync(filterDefinition, updateDefinition);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("An Exception occured while updating user password", ex.Message));
+            }
+        }
     }
 
 }

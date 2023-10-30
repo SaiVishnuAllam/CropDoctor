@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CropDoctor.Services.Core.Authentication.Dtos.RequestPaswordDto;
 
 namespace CropDoctor.Services.Core.Authentication.Repository
 {
@@ -17,6 +18,11 @@ namespace CropDoctor.Services.Core.Authentication.Repository
 
         Task<ObjectId> CollegeRegister(string college, ObjectId universityId);
 
-        Task<ObjectId> UserRegister(string username, string password, string studId, string emaiul, ObjectId collegeId);
+        Task<ObjectId> UserRegister(string username, string password, string studId, string email, ObjectId collegeId);
+        Task<UserModel> GetUserByUserName(string userName);
+        Task UpdateUserPassword(RequestPasswordDto requestPasswordDto);
+        Task<OtpVerification> VerifyOtp(string userName, string otpCode);
+        Task UpdateNewPassword(string userName, string newPassword);
+
     }
 }

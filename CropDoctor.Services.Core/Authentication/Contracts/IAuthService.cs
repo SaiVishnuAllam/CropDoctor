@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CropDoctor.Services.Core.Authentication.Dtos.RequestPaswordDto;
 
 namespace CropDoctor.Services.Core.Authentication.Contracts
 {
@@ -12,5 +13,7 @@ namespace CropDoctor.Services.Core.Authentication.Contracts
     {
         Task<LoginDto> Authentication(UserDto userDto);
         Task<ObjectId> UserRegistration(RegistrationDto registrationDto);
+        Task<IDictionary<string, string>> ResetPassword(RequestPasswordDto requestPasswordDto);
+        Task<IDictionary<string, string>> UpdatePassword(RequestPasswordDto requestPasswordDto);
     }
 }

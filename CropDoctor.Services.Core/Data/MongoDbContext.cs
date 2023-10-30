@@ -52,6 +52,9 @@ namespace CropDoctor.Services.Core.Data
         public IMongoCollection<CollegeModel> College => database?.GetCollection<CollegeModel>("CollegeList") ?? throw new InvalidOperationException("Database is not intialized");
         public IMongoCollection<UserModel> User => database?.GetCollection<UserModel>("UserList") ?? throw new InvalidOperationException("Database is not intialized");
         public IMongoCollection<ResponseModel> Response => database?.GetCollection<ResponseModel>("UploadedImage") ?? throw new InvalidOperationException("Database is not intialized");
+
+        public IMongoCollection<OtpVerification> OtpVerification => database?.GetCollection<OtpVerification>("otp_verification") ?? throw new InvalidOperationException("Database not initialized.");
+
     } 
 }
 
