@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CropDoctor.Service.Controllers
 {
-    [Authorize]
     [Route("api/registration")]
     [ApiController]
     public class RegistrationController : ControllerBase
