@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace CropDoctor.Services.Core.Data.Models
         [BsonElement("disease")]
         public string? Disease { get; set;}
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("userId")]
         public string? UserId { get; set;}
 

@@ -12,7 +12,7 @@ namespace CropDoctor.Services.Core.Data.Models
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
 
         [BsonElement("universityName")]
         public string? UniversityName { get; set; }

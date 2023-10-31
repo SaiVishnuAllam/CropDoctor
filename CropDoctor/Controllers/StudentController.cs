@@ -8,7 +8,7 @@ using MongoDB.Bson;
 namespace CropDoctor.Service.Controllers
 {
     //[Authorize]
-    [Route("api/[controller]")]
+    [Route("api/student")]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -25,11 +25,12 @@ namespace CropDoctor.Service.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> StudentDetails(ObjectId studentId)
+        [Route("profile")]
+        [HttpGet]
+        public async Task<IActionResult> StudentDetails(string studentId)
         {
-            await _detailsService.GetDetails(studentId);
-            return Ok();
+            var result = await _detailsService.GetDetails(studentId);
+            return Ok(result);
         }          
     }
 }

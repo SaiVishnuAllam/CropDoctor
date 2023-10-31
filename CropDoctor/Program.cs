@@ -6,6 +6,9 @@ using CropDoctor.Services.Core.Data;
 using CropDoctor.Services.Core.ImageUpload.Contracts;
 using CropDoctor.Services.Core.ImageUpload.Repository;
 using CropDoctor.Services.Core.ImageUpload.Services;
+using CropDoctor.Services.Core.StudentDetails.Contracts;
+using CropDoctor.Services.Core.StudentDetails.Repository;
+using CropDoctor.Services.Core.StudentDetails.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -29,6 +32,8 @@ builder.Services.AddScoped<IUploadService, UploadService>();
 builder.Services.AddScoped<IUploadRepositoryService, UploadRepositoryService>();
 builder.Services.AddScoped<ISaveImageRepositoryService, SaveImageRepositoryService>();
 builder.Services.AddScoped<ISaveImageService, SaveImageService>();
+builder.Services.AddScoped<IDetailsService, DetailsService>();
+builder.Services.AddScoped<IDetailsRepositoryService, DetailsrepositoryService>();
 
 
 

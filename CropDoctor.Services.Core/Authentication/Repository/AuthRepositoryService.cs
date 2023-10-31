@@ -83,7 +83,7 @@ namespace CropDoctor.Services.Core.Authentication.Repository
           
         }
 
-        public async Task<ObjectId> UniversityRegister(string university)
+        public async Task<string> UniversityRegister(string university)
         {
             var universityName = await _context.University.Find(s => s.UniversityName == university).FirstOrDefaultAsync().ConfigureAwait(false);
             if (universityName is not null)
@@ -101,7 +101,7 @@ namespace CropDoctor.Services.Core.Authentication.Repository
             return result.Id;
         }
 
-        public async Task<ObjectId> CollegeRegister(string college, ObjectId universityId)
+        public async Task<string> CollegeRegister(string college, string universityId)
         {
             var allCollege = await _context.College.Find(s => s.CollegeName == college).FirstOrDefaultAsync().ConfigureAwait(false);
             if (allCollege is not null)
@@ -121,7 +121,7 @@ namespace CropDoctor.Services.Core.Authentication.Repository
             return result.Id;
         }
 
-        public async Task<ObjectId> UserRegister(string userName, string password, string studId, string email, ObjectId collegeId)
+        public async Task<string> UserRegister(string userName, string password, string studId, string email, string collegeId)
         {
             var User = await _context.User.Find(s => s.Username == userName && s.Password == password).FirstOrDefaultAsync().ConfigureAwait(false);
 

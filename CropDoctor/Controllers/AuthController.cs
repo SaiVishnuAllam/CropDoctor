@@ -58,26 +58,42 @@ namespace CropDoctor.Service.Controllers
             return Ok($"User is registered with Id = {result}");
         }
 
-        /// <summary>
-        /// API to reset password
-        /// </summary>
-        /// <param name="requestPasswordDto"></param>
-        /// <returns></returns>
-        [Route("change/password")]
+        /*[Route("forgot/password")]
         [HttpPost]
-        public async Task<ActionResult> ResetPassword(RequestPasswordDto requestPasswordDto)
+        public async Task<ActionResult> SendEmailPasswordForgetCode(ForgotPasswordRequestDto forgotPasswordRequestDto)
         {
             try
             {
-                var result = await _authService.ResetPassword(requestPasswordDto);
+                var result = await _authService.SendEmailForForgotCode(forgotPasswordRequestDto.UserName, forgotPasswordRequestDto.ChangeType);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                //Logger.LogError("MP-Reset-Password-Error", ex.Message);
+                //Logger.LogError("MP-Forgot-Password-Error", ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+*/
+        ///// <summary>
+        ///// API to reset password
+        ///// </summary>
+        ///// <param name="requestPasswordDto"></param>
+        ///// <returns></returns>
+        //[Route("change/password")]
+        //[HttpPost]
+        //public async Task<ActionResult> ResetPassword(RequestPasswordDto requestPasswordDto)
+        //{
+        //    try
+        //    {
+        //        var result = await _authService.ResetPassword(requestPasswordDto);
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Logger.LogError("MP-Reset-Password-Error", ex.Message);
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
         /// <summary>
         /// API endpoint to verify the reset code provided to the user in email and to set a new password for the user

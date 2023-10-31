@@ -14,11 +14,11 @@ namespace CropDoctor.Services.Core.Authentication.Repository
     {
         Task<UserDetailsModel> AuthVerify(UserDto userDto);
 
-        Task<ObjectId> UniversityRegister(string university);
+        Task<string> UniversityRegister(string university);
 
-        Task<ObjectId> CollegeRegister(string college, ObjectId universityId);
+        Task<string> CollegeRegister(string college, string universityId);
 
-        Task<ObjectId> UserRegister(string username, string password, string studId, string email, ObjectId collegeId);
+        Task<string> UserRegister(string username, string password, string studId, string email, string collegeId);
         Task<UserModel> GetUserByUserName(string userName);
         Task UpdateUserPassword(RequestPasswordDto requestPasswordDto);
         Task<OtpVerification> VerifyOtp(string userName, string otpCode);

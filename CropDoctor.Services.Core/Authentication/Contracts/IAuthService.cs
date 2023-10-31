@@ -12,8 +12,8 @@ namespace CropDoctor.Services.Core.Authentication.Contracts
     public interface IAuthService
     {
         Task<LoginDto> Authentication(UserDto userDto);
-        Task<ObjectId> UserRegistration(RegistrationDto registrationDto);
-        Task<IDictionary<string, string>> ResetPassword(RequestPasswordDto requestPasswordDto);
+        Task<string> UserRegistration(RegistrationDto registrationDto);
+        //Task<IDictionary<string, string>> ResetPassword(RequestPasswordDto requestPasswordDto);
         Task<IDictionary<string, string>> UpdatePassword(RequestPasswordDto requestPasswordDto);
     }
 }

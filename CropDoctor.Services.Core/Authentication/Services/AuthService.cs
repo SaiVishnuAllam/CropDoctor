@@ -2,6 +2,7 @@
 using CropDoctor.Services.Core.Authentication.Dtos;
 using CropDoctor.Services.Core.Authentication.Repository;
 using CropDoctor.Services.Core.Core.Exceptions;
+using CropDoctor.Services.Core.Data.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;
@@ -94,21 +95,21 @@ namespace CropDoctor.Services.Core.Authentication.Services
             //return "university";
         }
 
-        public async Task<ObjectId> UserRegistration(RegistrationDto registrationDto)
+        public async Task<string> UserRegistration(RegistrationDto registrationDto)
         {
             var university = await _authRepositoryService.UniversityRegister(registrationDto.UniversityName);
-            if (university == ObjectId.Empty)
+            if (university == string.Empty)
                 throw new InternalServerErrorException("Unable to add or get university to Database");
             var college = await _authRepositoryService.CollegeRegister(registrationDto.CollegeName, university);
-            if (college == ObjectId.Empty)
+            if (college == string.Empty)
                 throw new InternalServerErrorException("Unable to add or get college to Database");
             var user = await _authRepositoryService.UserRegister(registrationDto.Username, registrationDto.Password, registrationDto.StudentId, registrationDto.Email, college);
-            if (user == ObjectId.Empty)
+            if (user == string.Empty)
                 throw new InternalServerErrorException("Unable to add or get User Details to Database");
             return user;
 
         }
-
+/*
         public async Task<IDictionary<string, string>> ResetPassword(RequestPasswordDto requestPasswordDto)
         {
             IDictionary<string, string> result = new Dictionary<string, string>();
@@ -133,7 +134,51 @@ namespace CropDoctor.Services.Core.Authentication.Services
             result.Add("status", "Password changed successfully");
             return result;
             
-        }
+        }*/
+
+        /// <summary>
+        /// API to send forget code in email
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="changeType"></param>
+        /// <returns></returns>
+        /// <exception cref="BighaatBaseException"></exception>
+        //public async Task<IDictionary<string, string>> SendEmailForForgotCode(string userName, string changeType)
+        //{
+        //    IDictionary<string, string> result = new Dictionary<string, string>();
+
+        //    var userDetails = await _userService.GetUserByUserName(userName) ?? throw new BighaatBaseException("Invalid user name");
+
+        //    if (!string.IsNullOrEmpty(userDetails.Email))
+        //    {
+        //        var resetCode = await _utilService.GenerateRandomPassword(AuthConfig.length);
+        //        string messageBody = $"<html><head><title>Page Title</title></head> <body> Hello {userDetails.FirstName}{" "}{userDetails.LastName},<br><br> Please use this code to reset your password, code : {resetCode} </html>";
+        //        MailRequest mailRequest = new MailRequest
+        //        {
+        //            Subject = "Password reset code",
+        //            Body = messageBody,
+        //            ToEmail = userDetails.Email
+        //        };
+        //        var emailStatus = await _emailService.SendEmailAsync(mailRequest);
+        //        OtpVerification otpVerification = new OtpVerification();
+        //        if (emailStatus.Contains("OK"))
+        //        {
+        //            otpVerification.Status = emailStatus;
+        //            otpVerification.Code = resetCode;
+        //            otpVerification.ChangeType = changeType;
+
+        //            var otp = await _authRepositoryService.UpdateOtpDetails(otpVerification, userDetails);
+        //        }
+        //        result.Add("status", "Please use the code sent to your registered email to reset your password");
+        //    }
+        //    else
+        //    {
+        //        result.Add("status", "Email not configured, please contact admin");
+        //    }
+        //    return result;
+            
+        //}
+
 
         /// <summary>
         /// Method to reset the password using the received OTP code and new password

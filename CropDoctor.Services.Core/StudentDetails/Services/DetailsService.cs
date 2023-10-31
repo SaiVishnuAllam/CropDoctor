@@ -1,4 +1,5 @@
 ﻿using CropDoctor.Services.Core.StudentDetails.Contracts;
+using CropDoctor.Services.Core.StudentDetails.Dtos;
 using CropDoctor.Services.Core.StudentDetails.Repository;
 using MongoDB.Bson;
 using System;
@@ -17,10 +18,9 @@ namespace CropDoctor.Services.Core.StudentDetails.Services
         {
             _detailsRepositoryService = detailsRepositoryService;
         }
-
-        public async Task GetDetails(ObjectId studentId)
+        public async Task<DetailsDto> GetDetails(string studentId)
         {
-            await _detailsRepositoryService.Details(studentId);
+            return await _detailsRepositoryService.Details(studentId);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using CropDoctor.Services.Core.StudentDetails.Dtos;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace CropDoctor.Services.Core.StudentDetails.Repository
 {
     public interface IDetailsRepositoryService
     {
-        Task Details(ObjectId studentId);
+        Task<DetailsDto> Details(string studentId);
     }
 }

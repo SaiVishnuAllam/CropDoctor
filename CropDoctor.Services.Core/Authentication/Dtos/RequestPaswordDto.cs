@@ -13,7 +13,7 @@ namespace CropDoctor.Services.Core.Authentication.Dtos
         public class RequestPasswordDto
         {
             [JsonProperty("id")]
-            public ObjectId Id { get; set; }
+            public string? Id { get; set; }
 
             [JsonProperty("userName")]
             public string UserName { get; set; }
